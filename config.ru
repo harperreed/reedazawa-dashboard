@@ -1,7 +1,8 @@
 require 'dashing'
 
 configure do
-  set :auth_token, 'YOUR_AUTH_TOKEN'
+  set :auth_token, 'bunnies'
+  set :default_dashboard, 'cycle'
 
   helpers do
     def protected!

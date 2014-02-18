@@ -10,7 +10,7 @@ $light-color: rgba(255, 255, 255, 0.7);
 // Widget-forecast styles
 // ----------------------------------------------------------------------------
 .widget-title {
-  
+
     color: $light-color;
     font-size: 15px;
     text-align: left;
@@ -43,14 +43,12 @@ $light-color: rgba(255, 255, 255, 0.7);
 
   .title {
     color: $light-color;
-    text-align: left;
-    font-size: 25px;
+    font-size: 50px;
   }
 
   .temp {
     color: $full-color;
-    text-align: left;
-    font-size: 45px;
+    font-size: 100px;
   }
 
   .summary {
@@ -61,8 +59,6 @@ $light-color: rgba(255, 255, 255, 0.7);
   }
 
   .forecast-icon {
-    float: left;
-    text-align: left;
     margin-right: 20px;
   }
 

@@ -13,7 +13,7 @@ end
 
 def choose_image(images)
     image = images[rand(images.length)]
-    return image['media']['m']
+    return image['media']['m'].gsub(/_m.jpg/, "_b.jpg")
 end
 
 puts get_images()

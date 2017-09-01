@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Wunderground = require('wundergroundnode');
 var yaml_config = require('node-yaml-config');
-var moment = require('moment');
+var moment = require('moment-timezone');
 
 var config = yaml_config.load(__dirname + '/../config/config.yaml');
 
@@ -21,7 +21,7 @@ function getweather() {
 /* GET home page. */
 router.get('/weather', function(req, res, next) {
     var weather = []
-    var time = moment().format('LT')
+    var time = moment().tz("America/Chicago").format('LT')
         
 
     getweather().then(function(data) {

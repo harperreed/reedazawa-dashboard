@@ -21,8 +21,7 @@ function getweather() {
 /* GET home page. */
 router.get('/weather', function(req, res, next) {
     var weather = []
-    var time = moment().tz("America/Chicago").format('LT')
-        
+    var time = moment().tz(config.timezone).format('LT')
 
     getweather().then(function(data) {
 

@@ -1,3 +1,96 @@
 extends dashboard_layout
 
-
+block content
+    #dash.container-fluid
+      h1.float-right
+        .text-right
+          span#time 0:00 PM
+          br
+          span#temp
+            img(src='/imgs/climacons/Cloud-Drizzle-Alt.svg', alt='')
+          | 75 °
+          br
+      h1.display-1
+        i.fa.fa-home(aria-hidden='true')
+        |  Reedazawa
+      br
+      hr
+      .row
+        .col
+          h3 Location
+          .row
+            .col
+              figure.figure
+                img.figure-img.img-fluid.rounded(src='https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=400x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0x406aff%7Clabel:H%7C2332+w+ohio,+60612', alt='A generic square placeholder image with rounded corners in a figure.')
+                figcaption.figure-caption.text-center Harper is at home.
+            .col
+              figure.figure
+                img.figure-img.img-fluid.rounded(src='https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=400x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff5ce8%7Clabel:H%7C111+S+Wacker+Dr,+Chicago,+IL+60606', alt='A generic square placeholder image with rounded corners in a figure.')
+                figcaption.figure-caption.text-center Hiromi is at work.
+        .col
+          h3 Last 5 events
+          .row
+            .col
+              table.table.table-striped.table-bordered.table-condensed
+                thead
+                  tr
+                    th Date
+                    th Room
+                    th Description
+                tbody#log
+                  tr
+                    td an hour ago
+                    td Office
+                    td Motion Detected
+                  tr
+                    td an hour ago
+                    td Mud Room
+                    td Door Locked
+                  tr
+                    td 2 hours ago
+                    td Mud Room
+                    td Motion no longer detected
+                  tr
+                    td 2 hours ago
+                    td Mud Room
+                    td Motion Detected
+                  tr
+                    td 2 hours ago
+                    td Kitchen
+                    td Motion Detected
+      .row
+        .col
+          h3 Thermostats
+          .row
+            .col
+              .text-center
+                h1.display-3 58 °
+              h3.figure-caption.text-center
+                i.fa.fa-fire(aria-hidden='true')
+                |  Basement 
+                i.fa.fa-fire(aria-hidden='true')
+            .col
+              .text-center
+                h1.display-3 70 °
+              h3.figure-caption.text-center
+                i.fa.fa-snowflake-o(aria-hidden='true')
+                |  First Floor 
+                i.fa.fa-snowflake-o(aria-hidden='true')
+            .col
+              .text-center
+                h1.display-3 68 °
+              h3.figure-caption.text-center
+                i.fa.fa-snowflake-o(aria-hidden='true')
+                |  Upstairs 
+                i.fa.fa-snowflake-o(aria-hidden='true')
+        .col
+          .row
+            .col
+              h3 Tesla charge
+              div
+                h1.display-1
+                  i.fa.fa-battery-quarter(aria-hidden='true')
+              h3.figure-caption  25% Charged / 120 Miles
+            .col
+              h3
+    |  1200 by 825px

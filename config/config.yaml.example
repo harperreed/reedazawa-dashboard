@@ -1,0 +1,6 @@
+default:
+
+  weatherunderground:
+    query: 60601
+    apikey: xxx
+  

@@ -20,9 +20,7 @@ function getweather() {
 
 /* GET home page. */
 router.get('/weather', function(req, res, next) {
-    var weather = []
-    var time = moment().tz(config.timezone).format('LT')
-
+    
     getweather().then(function(data) {
 
         return data.current_observation
@@ -37,7 +35,7 @@ router.get('/weather', function(req, res, next) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-    var time = moment().format('LT')
+    var time = moment().tz(config.timezone).format('LT')
         
 
     getweather().then(function(data) {

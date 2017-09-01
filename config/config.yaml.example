@@ -3,4 +3,4 @@ default:
   weatherunderground:
     query: 60601
     apikey: xxx
-  
+  timezone: America/Los_Angeles

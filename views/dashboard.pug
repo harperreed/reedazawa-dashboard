@@ -20,18 +20,18 @@ block content
         .col
           h3 Location
           .row
-            .col
-              figure.figure
-                img.figure-img.img-fluid.rounded(src='https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=400x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0x406aff%7Clabel:H%7C2332+w+ohio,+60612', alt='A generic square placeholder image with rounded corners in a figure.')
-                figcaption.figure-caption.text-center Harper is at home.
-            .col
-              figure.figure
-                img.figure-img.img-fluid.rounded(src='https://maps.googleapis.com/maps/api/staticmap?autoscale=2&size=400x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff5ce8%7Clabel:H%7C111+S+Wacker+Dr,+Chicago,+IL+60606', alt='A generic square placeholder image with rounded corners in a figure.')
-                figcaption.figure-caption.text-center Hiromi is at work.
+            each people in presence
+              .col
+                figure.figure
+                  img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
+                  figcaption.figure-caption.text-center 
+                    p #{people.full_name} is at #{people.location.name}
+
         .col
           h3 Last 5 events
           .row
             .col
+
               table.table.table-striped.table-bordered.table-condensed
                 thead
                   tr
@@ -39,25 +39,12 @@ block content
                     th Room
                     th Description
                 tbody#log
-                  tr
-                    td an hour ago
-                    td Office
-                    td Motion Detected
-                  tr
-                    td an hour ago
-                    td Mud Room
-                    td Door Locked
-                  tr
-                    td 2 hours ago
-                    td Mud Room
-                    td Motion no longer detected
-                  tr
-                    td 2 hours ago
-                    td Mud Room
-                    td Motion Detected
-                  tr
-                    td 2 hours ago
-                    td Kitchen
-                    td Motion Detected
+                  each log in logs
+                    tr
+                      td #{log.timestamp}
+
+
+                      td #{log.room}
+                      td #{log.action}
 
     |  1200 by 825px

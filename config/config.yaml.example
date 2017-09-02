@@ -1,6 +1,15 @@
 default:
+  title: Default Dashboard
 
   weatherunderground:
-    query: 60601
+    query: "60601" 
     apikey: xxx
   timezone: America/Los_Angeles
+
+  firebase:
+    serviceaccount_json: account.json
+    domain: domain
+
+  presence:
+    url: https://presence-server.com
+    apikey: xxxx

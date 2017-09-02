@@ -3,20 +3,76 @@ var router = express.Router();
 var Wunderground = require('wundergroundnode');
 var yaml_config = require('node-yaml-config');
 var moment = require('moment-timezone');
+var admin = require("firebase-admin");
+var request = require('request');
 
 var config = yaml_config.load(__dirname + '/../config/config.yaml');
 
 var wunderground = new Wunderground(config.weatherunderground.apikey);
 
-function getweather() {
-        return new Promise(function(resolve,reject) {
-            wunderground.conditions().request(config.weatherunderground.query, function(err, response){
-                weather = response
-                resolve(weather);
-            });
-        });
-    }
 
+var serviceAccount = require(__dirname +"/../config/" + config.firebase.serviceaccount_json);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://"+config.firebase.domain+".firebaseio.com"
+});
+
+function getweather() {
+    return new Promise(function(resolve,reject) {
+        wunderground.conditions().request(config.weatherunderground.query, function(err, response){
+            weather = response
+            resolve(weather);
+        });
+    });
+}
+
+
+function getLogs() {
+    return new Promise(function(resolve,reject) {
+        var ref = admin.database().ref("logger")
+        ref.orderByChild('timestamp').limitToLast(5).once("value", function(snapshot) {
+            resolve(snapshot.val());
+        });
+    });
+}
+
+function getPresence() {
+    return new Promise(function(resolve,reject) {
+        request.post({
+            headers: {'content-type' : 'application/x-www-form-urlencoded'},
+            url:     config.presence.url,
+            body:    "api_key=" + config.presence.apikey
+        }, function(error, response, body){
+            presence = JSON.parse(body)
+            resolve(presence)
+        });
+    });
+}
+
+
+/* GET home page. */
+router.get('/logs', function(req, res, next) {
+    getLogs().then(function(data) {
+        return data
+    }).then(function(data){
+        res.send(data)
+    })
+    .catch(next)
+});
+
+/* GET home page. */
+router.get('/presence', function(req, res, next) {
+    p = []
+    getPresence().then(function(data) {
+        res.send(p)
+        return data
+    }).then(function(data2){
+        res.send(p)
+
+    })
+    .catch(next)
+});
 
 /* GET home page. */
 router.get('/weather', function(req, res, next) {
@@ -37,21 +93,32 @@ router.get('/', function(req, res, next) {
 
     var time = moment().tz(config.timezone).format('LT')
         
+    weather = null
+    presence = null
+    logs = null
 
     getweather().then(function(data) {
-
-        return data.current_observation
+        weather = data.current_observation
+         
+        presence =getPresence()
+        return getPresence()
     }).then(function(data){
-        //res.send(data)
-        weather = data
+        presence = data
+        return getLogs()
+    }).then(function(data){
+        logs = data
+    }).then(function(data){
         variables = {
-            title: 'Reedazawa Dashboard', 
+            title: config.title, 
             temp: weather.temp_f, 
             weather: weather.weather, 
             weathericon: weather.icon_url,
+            presence: presence.people,
+            logs:logs,
             time:time
         }
-        console.log(variables)
+        console.log(variables);
+
         res.render('dashboard', variables);
     })
     .catch(next)

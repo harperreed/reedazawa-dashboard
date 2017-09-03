@@ -13,14 +13,14 @@ block content
       h1.display-1
         i.fa.fa-home(aria-hidden='true')
         | Reedazawa
-      br
+
 
       hr
       .row
         .col
           h3 Agenda 
           
-        if !presence.everyone_home  
+        if presence.everyone_home  
           .col
             h3 Where is everyone?
             .row

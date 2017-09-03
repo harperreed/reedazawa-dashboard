@@ -12,12 +12,12 @@ body{
       color: #000;
       width: 1200px;
       height: 825px;
-      border: 1px solid red;
+      border: 0px solid black;
 
       }
 
 .col{
-  border: 1px solid red;
+  border: 0px solid red;
 }
 
 #battery{

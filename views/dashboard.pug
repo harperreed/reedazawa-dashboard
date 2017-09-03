@@ -13,12 +13,39 @@ block content
       h1.display-1
         i.fa.fa-home(aria-hidden='true')
         | Reedazawa
-
-
+        case day
+            when "Saturday"
+              small.text-muted  <i class="fa fa-diamond" aria-hidden="true"></i>
+            when "Friday"
+              small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
+            when "Sunday"
+              small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
+            when "Monday"
+              small.text-muted  <i class="fa fa-hand-rock-o" aria-hidden="true"></i>
       hr
       .row
         .col
-          h3 #{day}'s Agenda
+          if hour <7
+            h1.text-center Good Morning, early riser!
+          else if hour <= 10
+            h1.text-center Good Morning
+          else if hour <= 12
+            h1.text-center Get Lunch
+          else if hour < 17
+            h1.text-center Good Afternoon
+          else if hour < 17
+            h1.text-center Good Evening
+          else if hour < 22
+            h1.text-center Good Night
+
+          else if hour < 24
+            h1.text-center It's late, Go to Bed! 😴
+          hr
+
+
+      .row
+        .col
+          h3 #{day}'s Agenda #{hour}
             case day
               when "Saturday"
                 small.text-muted  It's the weekend!
@@ -28,9 +55,6 @@ block content
                 small.text-muted  Ugh                
               default
                 small.text-muted  work work work work work
-
-              
-
 
             .row
               .col
@@ -77,7 +101,7 @@ block content
                       td bed 
 
           
-        if !presence.everyone_home  
+        if presence.everyone_home  
           .col
             h3 Where is everyone?
             .row

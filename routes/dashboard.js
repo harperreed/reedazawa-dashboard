@@ -5,14 +5,13 @@ var yaml_config = require('node-yaml-config');
 var moment = require('moment-timezone');
 var admin = require("firebase-admin");
 var request = require('request');
-const cache = require('node-file-cache').create({"life":10});
-
-
 
 var config = yaml_config.load(__dirname + '/../config/config.yaml');
 
-var wunderground = new Wunderground(config.weatherunderground.apikey);
 
+const cache = require('node-file-cache').create({"life":1800});
+
+var wunderground = new Wunderground(config.weatherunderground.apikey);
 
 var serviceAccount = require(__dirname +"/../config/" + config.firebase.serviceaccount_json);
 

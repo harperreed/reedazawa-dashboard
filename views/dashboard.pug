@@ -19,6 +19,14 @@ block content
       .row
         .col
           h3 Agenda 
+
+           .row
+              .col
+                p calendar 1
+              .col
+                p calendar 2 
+
+
           
         if presence.everyone_home  
           .col
@@ -50,6 +58,8 @@ block content
 
       .row
         .col.text-center#quotation
-          p #{quotation.quotation} &mdash; #{quotation.author}      
+          | #{quotation.quotation} 
+          br
+          | &mdash; #{quotation.author}      
 
     |  1200 by 825px

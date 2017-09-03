@@ -122,7 +122,7 @@ router.get('/', function(req, res, next) {
         }
         console.log(variables);
 
-        res.render('dashboardbad', variables);
+        res.render('dashboard', variables);
     })
     .catch(next)
 

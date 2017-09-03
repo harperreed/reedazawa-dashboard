@@ -115,7 +115,7 @@ router.get('/', function(req, res, next) {
             temp: weather.temp_f, 
             weather: weather.weather, 
             weathericon: weather.icon_url,
-            presence: presence.people,
+            presence: presence,
             logs:logs,
             time:time,
             quotation:quotation

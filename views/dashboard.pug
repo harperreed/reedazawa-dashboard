@@ -10,15 +10,16 @@ block content
             img(src=weathericon, alt='')
           |  #{temp} °
           br
-      h1.display-1 🏡 Reedazawa
-
+      h1.display-1
+        i.fa.fa-home(aria-hidden='true')
+        |  Reedazawa
       br
 
       hr
       .row
         .col
           h3 Agenda
-        if presence.everyone_home  
+        if !presence.everyone_home  
           .col
             h3 Where is everyone ?
             .row
@@ -43,7 +44,7 @@ block content
             h3 Everyone is home
             .row
               .col
-                h1.display-1.text-center 💞🐰 🐩 🐒💞
+                h1.display-1.text-center <i class="fa fa-heart" aria-hidden="true"></i><i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart" aria-hidden="true"></i>
                     
 
         

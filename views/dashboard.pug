@@ -26,7 +26,7 @@ block content
               each people in presence.people
                 .col
                   figure.figure
-                    img.figure-img.img-fluid.rounded(src=people.location.map_url, width=300, alt=people.full_name)
+                    img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
                     figcaption.figure-caption.text-center
                       - name = people.full_name.split(" ")[0]
                       if people.location.inTransit == "1"

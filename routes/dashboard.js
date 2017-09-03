@@ -131,8 +131,8 @@ router.get('/', function(req, res, next) {
             presence: presence,
             logs:logs,
             time:time,
-            day: moment().format('dddd'),
-            hour: moment().format('k'),
+            day: moment().tz(config.timezone).format('dddd'),
+            hour: moment().tz(config.timezone).format('k'),
             quotation:quotation
         }
         console.log(variables);

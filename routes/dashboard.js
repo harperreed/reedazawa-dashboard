@@ -131,6 +131,7 @@ router.get('/', function(req, res, next) {
             presence: presence,
             logs:logs,
             time:time,
+            day: moment().format('dddd'),
             quotation:quotation
         }
         console.log(variables);

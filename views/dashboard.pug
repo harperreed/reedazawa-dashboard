@@ -18,9 +18,21 @@ block content
       hr
       .row
         .col
-          h3 Today's Agenda 
+          h3 #{day}'s Agenda
+            case day
+              when "Saturday"
+                small.text-muted  It's the weekend!
+              when "Sunday"
+                small.text-muted  One more day. Relax it up
+              when "Monday"   
+                small.text-muted  Ugh                
+              default
+                small.text-muted  work work work work work
 
-           .row
+              
+
+
+            .row
               .col
                 p Harper
                 table.table.table-striped.table-sm
@@ -85,10 +97,11 @@ block content
                           p #{name} is at #{people.location.address1}, #{people.location.address2}
         else
           .col
-            h3 Everyone is home!
+            
             .row
               .col
-                h1.display-1.text-center <i class="fa fa-heart" aria-hidden="true"></i> <i class="fa fa-heart-o" aria-hidden="true"></i> <i class="fa fa-heart" aria-hidden="true"></i>
+                h1.display-1.text-center Everyone is home!
+                h1.text-center <i class="fa fa-heart" aria-hidden="true"></i> <i class="fa fa-heart-o" aria-hidden="true"></i> <i class="fa fa-heart" aria-hidden="true"></i>
                     
 
         

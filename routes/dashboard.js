@@ -13,6 +13,9 @@ var wunderground = new Wunderground(config.weatherunderground.apikey);
 
 var serviceAccount = require(__dirname +"/../config/" + config.firebase.serviceaccount_json);
 
+var quotations = require(__dirname +"/../config/quotations.json");
+
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://"+config.firebase.domain+".firebaseio.com"
@@ -106,6 +109,7 @@ router.get('/', function(req, res, next) {
         presence = data
         return presence
     }).then(function(data){
+        quotation = quotations[Math.floor(Math.random()*quotations.length)]
         variables = {
             title: config.title, 
             temp: weather.temp_f, 
@@ -113,14 +117,14 @@ router.get('/', function(req, res, next) {
             weathericon: weather.icon_url,
             presence: presence.people,
             logs:logs,
-            time:time
+            time:time,
+            quotation:quotation
         }
         console.log(variables);
 
         res.render('dashboard', variables);
     })
     .catch(next)
-
 
     
     //res.render('dashboard', { title: 'Express', temp: weather.temp_f});

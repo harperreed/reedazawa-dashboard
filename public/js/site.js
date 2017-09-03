@@ -15,7 +15,7 @@
             $("#battery").html('<i class="fa fa-battery-half" aria-hidden="true"></i>')
         }else if (battery>25){
             $("#battery").html('<i class="fa fa-battery-quarter" aria-hidden="true"></i>')
-        }else if (battery>0){
+        }else if (battery>=0){
             $("#battery").html('<i class="fa fa-battery-empty" aria-hidden="true"></i>')
         }
     }

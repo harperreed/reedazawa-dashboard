@@ -3,16 +3,39 @@ body{
       font-family: 'Roboto', serif;
       color: #000;
 
-}
+      }
 
-#dash{
-
+      #dash{
+      width:1200px;
+      height: 825px;
+      padding: 5px;
       background-color: #fff;
       color: #000;
-}
+
+      position:relative;
+      }
 
 #battery{
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+
+#quotation{
+    font-size: 200%;
+    font-size: 2.357vw;
+    font-style: normal;
+    font-variant: small-caps;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    margin: 1% auto;
+    
+
+
+
+}
+
+.figure-caption {
+
+    color: #222222;
 }

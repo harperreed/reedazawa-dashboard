@@ -18,6 +18,8 @@ block content
       hr
       .row
         .col
+          h3 Agenda
+        .col
           h3 Location
           .row
             each people in presence
@@ -36,8 +38,7 @@ block content
                         p #{name} is at #{people.location.address1}, #{people.location.address2}
                     
 
-        .col
-          h3 Agenda
+        
 
       .row
         .col.text-center#quotation

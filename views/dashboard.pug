@@ -30,7 +30,7 @@ block content
                     img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
                     figcaption.figure-caption.text-center
                       - name = people.full_name.split(" ")[0]
-                      if people.location.inTransit == "1"
+                      if people.location.inTransit > 0 
                         - speed = Math.round(people.location.speed)
                         p #{name} is in transit (#{speed} mph)
                       else

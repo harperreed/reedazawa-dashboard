@@ -5,6 +5,9 @@ var yaml_config = require('node-yaml-config');
 var moment = require('moment-timezone');
 var admin = require("firebase-admin");
 var request = require('request');
+const cache = require('node-file-cache').create({"life":10});
+
+
 
 var config = yaml_config.load(__dirname + '/../config/config.yaml');
 
@@ -23,10 +26,21 @@ admin.initializeApp({
 
 function getweather() {
     return new Promise(function(resolve,reject) {
-        wunderground.conditions().request(config.weatherunderground.query, function(err, response){
-            weather = response
+        var key = "weather"+ config.weatherunderground.query
+        var weather = cache.get(key)
+        if (weather == null){
+
+            console.log("Weather cache not hit")
+            wunderground.conditions().request(config.weatherunderground.query, function(err, response){
+                weather = response
+                cache.set(key, weather);
+                resolve(weather);
+            });
+
+        }else{
+            console.log("Weather cache hit")
             resolve(weather);
-        });
+        }
     });
 }
 

@@ -65,10 +65,10 @@ router.get('/logs', function(req, res, next) {
 router.get('/presence', function(req, res, next) {
     p = []
     getPresence().then(function(data) {
-        res.send(p)
+        //res.send(data)
         return data
     }).then(function(data2){
-        res.send(p)
+        res.send(data2)
 
     })
     .catch(next)
@@ -104,9 +104,7 @@ router.get('/', function(req, res, next) {
         return getPresence()
     }).then(function(data){
         presence = data
-        return getLogs()
-    }).then(function(data){
-        logs = data
+        return presence
     }).then(function(data){
         variables = {
             title: config.title, 

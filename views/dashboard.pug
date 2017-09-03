@@ -24,27 +24,20 @@ block content
               .col
                 figure.figure
                   img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
-                  figcaption.figure-caption.text-center 
-                    p #{people.full_name} is at #{people.location.name}
+                  figcaption.figure-caption.text-center
+                    - name = people.full_name.split(" ")[0]
+                    if people.location.inTransit == "1"
+                      - speed = Math.round(people.location.speed)
+                      p #{name} is in transit (#{speed} mph)
+                    else
+                      if people.location.name != undefined
+                        p #{name} is at #{people.location.name}
+                      else
+                        p #{name} is at #{people.location.address1}, #{people.location.address2}
+                    
 
         .col
-          h3 Last 5 events
-          .row
-            .col
-
-              table.table.table-striped.table-bordered.table-condensed
-                thead
-                  tr
-                    th Date
-                    th Room
-                    th Description
-                tbody#log
-                  each log in logs
-                    tr
-                      td #{log.timestamp}
-
-
-                      td #{log.room}
-                      td #{log.action}       
+          h3 Agenda
+                 
 
     |  1200 by 825px

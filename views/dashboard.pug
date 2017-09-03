@@ -18,17 +18,54 @@ block content
       hr
       .row
         .col
-          h3 Agenda 
+          h3 Today's Agenda 
 
            .row
               .col
-                p calendar 1
+                p Harper
+                table.table.table-striped.table-sm
+                  tbody
+                    tr
+                      th(scope='row') 9:30am
+                      td Doctor's appointment
+                    tr
+                      th(scope='row') 10:30am
+                      td Harper <> Dylan                     
+                    tr
+                      th(scope='row') 11:00am
+                      td Call Hiromi <> Harper    
+                    tr
+                      th(scope='row') 6:00pm
+                      td Work it out 
+                    tr
+                      th(scope='row') 8:00pm
+                      td Dinner at Mirai 
+                    tr
+                      th(scope='row') 11:00pm
+                      td Drinks at handlbar 
+                    tr
+                      th(scope='row') 12:00am
+                      td bed                                                                                                           
               .col
-                p calendar 2 
-
+                p Hiromi 
+                table.table.table-striped.table-sm
+                  tbody
+                  
+                    tr
+                      th(scope='row') 6:00pm
+                      td Work it out                 
+                    tr
+                      th(scope='row') 8:00pm
+                      td Dinner at Mirai 
+                    tr
+                      th(scope='row') 11:00pm
+                      td Drinks at handlbar 
+                    tr
+                      th(scope='row') 12:00am
+                      td bed 
 
           
-        if presence.everyone_home  
+        if !presence.everyone_home  
           .col
             h3 Where is everyone?
             .row

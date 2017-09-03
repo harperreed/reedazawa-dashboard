@@ -28,7 +28,7 @@ block content
           if hour <7
             h1.text-center 💤 Good Morning, early riser!
           else if hour <= 10
-            h1.text-center Good Morning
+            h1.text-center Good Morning 🌅
           else if hour <= 12
             h1.text-center Get Lunch
           else if hour < 17
@@ -45,7 +45,7 @@ block content
 
       .row
         .col
-          h3 #{day}'s Agenda #{hour}
+          h3 #{day}'s Agendang
             case day
               when "Saturday"
                 small.text-muted  It's the weekend!
@@ -101,7 +101,7 @@ block content
                       td bed 
 
           
-        if presence.everyone_home  
+        if !presence.everyone_home  
           .col
             h3 Where is everyone?
             .row

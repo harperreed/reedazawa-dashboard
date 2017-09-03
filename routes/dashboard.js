@@ -132,7 +132,7 @@ router.get('/', function(req, res, next) {
             logs:logs,
             time:time,
             day: moment().format('dddd'),
-            hour: 5,//moment().format('k'),
+            hour: moment().format('k'),
             quotation:quotation
         }
         console.log(variables);

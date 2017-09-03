@@ -25,12 +25,14 @@ block content
       hr
       .row
         .col
-          if hour <7
-            h1.text-center 💤 Good Morning, early riser! 🌅
-          else if hour <= 10
-            h1.text-center Good Morning 
+          if hour < 7
+            h1.text-center 🔥 Good Morning, early riser! 🔥 
+          else if hour < 10
+            h1.text-center Good Morning. Have a great day
+          else if hour < 11
+            h1.text-center Good Morning.
           else if hour <= 12
-            h1.text-center Get Lunch
+            h1.text-center Go get Lunch
           else if hour < 17
             h1.text-center Good Afternoon
           else if hour < 17
@@ -45,7 +47,7 @@ block content
 
       .row
         .col
-          h3 #{day}'s Agendang
+          h3 #{day}'s Agenda
             case day
               when "Saturday"
                 small.text-muted  It's the weekend!

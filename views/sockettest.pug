@@ -1,0 +1,23 @@
+extends dashboard_layout
+
+block content
+
+  #dash.container-fluid
+      block content
+        h1.display-1
+            i.fa.fa-home(aria-hidden='true')
+            |  Default Dashboard
+        br
+        hr
+
+        div#updatethis 
+          p let's make some widgets!
+      #battery
+
+  script(src="/socket.io/socket.io.js")
+  script.
+    var socket = io('//'+document.location.hostname+':'+document.location.port);
+    socket.on('socketToMe', function (data) {
+      $('#updatethis').html("<p>"+data+"</p>");
+      console.log(data);
+    });

@@ -10,14 +10,20 @@ var index = require('./routes/index');
 var dashboard = require('./routes/dashboard');
 var yaml_config = require('node-yaml-config');
 
-
-
 var config = yaml_config.load(__dirname + '/config/config.yaml');
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+//setup Socket.io
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -27,8 +33,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
 
+//routes
+app.use('/', index);
 app.use('/dashboard', dashboard);
 
 // catch 404 and forward to error handler
@@ -49,4 +56,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};

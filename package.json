@@ -11,9 +11,7 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "^4.15.4",
-    "express.io": "^1.1.13",
     "firebase-admin": "^5.2.1",
-    "ical": "^0.5.0",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "morgan": "^1.8.2",
@@ -23,6 +21,7 @@
     "promise": "^8.0.1",
     "pug": "~2.0.0-beta11",
     "serve-favicon": "^2.4.3",
+    "socket.io": "^2.0.3",
     "wundergroundnode": "^0.11.0"
   }
 }

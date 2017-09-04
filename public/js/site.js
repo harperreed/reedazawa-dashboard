@@ -75,7 +75,7 @@ var getWeather = function () {
 
 $(document).ready(function() {
     getDeviceTelemetry();
-    var update_time = 300000;
+    var update_time = 6000;
     var timer = setInterval(function() {
         getDeviceTelemetry();
         getQuotation();

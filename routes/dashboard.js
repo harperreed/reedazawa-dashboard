@@ -114,7 +114,7 @@ router.get('/quotation', function(req, res, next) {
 /* GET home page. */
 router.get('/greeting', function(req, res, next) {
     variables = {
-            hour: moment().tz(config.timezone).format('k')
+            hour: 5 //moment().tz(config.timezone).format('k')
         }
     res.render('greeting', variables);
 });

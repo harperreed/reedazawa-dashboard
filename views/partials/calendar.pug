@@ -1,0 +1,55 @@
+mixin calendarblock(day)
+  h3 #{day}'s Agenda
+    case day
+      when "Saturday"
+        small.text-muted  It's the weekend!
+      when "Sunday"
+        small.text-muted  One more day. Relax it up
+      when "Monday"   
+        small.text-muted  Ugh                
+      default
+        small.text-muted  work work work work work
+
+    .row
+      .col
+        p Harper
+        table.table.table-striped.table-sm
+          tbody
+            tr
+              th(scope='row') 9:30am
+              td Doctor's appointment
+            tr
+              th(scope='row') 10:30am
+              td Harper <> Dylan                     
+            tr
+              th(scope='row') 11:00am
+              td Call Hiromi <> Harper    
+            tr
+              th(scope='row') 6:00pm
+              td Work it out 
+            tr
+              th(scope='row') 8:00pm
+              td Dinner at Mirai 
+            tr
+              th(scope='row') 11:00pm
+              td Drinks at handlbar 
+            tr
+              th(scope='row') 12:00am
+              td bed                                                                                                           
+      .col
+        p Hiromi 
+        table.table.table-striped.table-sm
+          tbody
+          
+            tr
+              th(scope='row') 6:00pm
+              td Work it out                 
+            tr
+              th(scope='row') 8:00pm
+              td Dinner at Mirai 
+            tr
+              th(scope='row') 11:00pm
+              td Drinks at handlbar 
+            tr
+              th(scope='row') 12:00am
+              td bed 

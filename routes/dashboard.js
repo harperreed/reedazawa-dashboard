@@ -83,8 +83,12 @@ router.get('/presence', function(req, res, next) {
     getPresence().then(function(data) {
         //res.send(data)
         return data
-    }).then(function(data2){
-        res.send(data2)
+    }).then(function(presence){
+        console.log(presence)
+        variables = {
+            presence: presence,
+        }
+        res.render('presence', variables);
 
     })
     .catch(next)
@@ -92,16 +96,27 @@ router.get('/presence', function(req, res, next) {
 
 /* GET home page. */
 router.get('/weather', function(req, res, next) {
-    
     getweather().then(function(data) {
-
         return data.current_observation
     }).then(function(data){
         res.send(data)
-        
     })
     .catch(next)
+});
 
+
+/* GET home page. */
+router.get('/quotation', function(req, res, next) {
+    quotation = quotations[Math.floor(Math.random()*quotations.length)]
+    res.send(quotation)
+});
+
+/* GET home page. */
+router.get('/greeting', function(req, res, next) {
+    variables = {
+            hour: moment().tz(config.timezone).format('k')
+        }
+    res.render('greeting', variables);
 });
 
 /* GET home page. */

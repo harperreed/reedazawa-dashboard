@@ -6,9 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+
 var dashboard = require('./routes/dashboard');
 var yaml_config = require('node-yaml-config');
+
 
 
 var config = yaml_config.load(__dirname + '/config/config.yaml');
@@ -26,9 +27,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use('/', index);
-app.use('/users', users);
+
 app.use('/dashboard', dashboard);
 
 // catch 404 and forward to error handler

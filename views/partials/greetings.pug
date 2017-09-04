@@ -1,0 +1,17 @@
+mixin greeting(hour)
+  if hour < 7
+    | 🔥 Good Morning, early riser! 🔥 
+  else if hour < 10
+    | Good Morning. Have a great day
+  else if hour < 11
+    | Good Morning.
+  else if hour <= 12
+    | Go get Lunch
+  else if hour < 17
+    | Good Afternoon
+  else if hour <= 22
+    | Good Evening
+  else if hour <= 23
+    | Good Night
+  else if hour < 24
+    | 😴 It's late, Go to Bed! 😴

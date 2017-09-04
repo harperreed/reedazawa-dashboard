@@ -1,140 +1,140 @@
 extends dashboard_layout
 
 block content
-    #dash.container-fluid
-      h1.float-right
-        .text-right
-          span#time #{time}
-          br
-          span#temp
-            img(src=weathericon, alt='')
-          |  #{temp} °
-          br
-      h1.display-1
-        i.fa.fa-home(aria-hidden='true')
-        | Reedazawa
-        case day
-            when "Saturday"
-              small.text-muted  <i class="fa fa-diamond" aria-hidden="true"></i>
-            when "Friday"
-              small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
-            when "Sunday"
-              small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
-            when "Monday"
-              small.text-muted  <i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+
+  h1.float-right
+    .text-right
+      span#temp
+        img(src=weathericon, alt='', height=75)
+      |  #{temp} °
+
+
+      br
+  h1.display-1
+    i.fa.fa-home(aria-hidden='true')
+    | Reedazawa
+    case day
+        when "Saturday"
+          small.text-muted  <i class="fa fa-diamond" aria-hidden="true"></i>
+        when "Friday"
+          small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
+        when "Sunday"
+          small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
+        when "Monday"
+          small.text-muted  <i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+  hr
+  .row
+    .col
+      if hour < 7
+        h1.text-center 🔥 Good Morning, early riser! 🔥 
+      else if hour < 10
+        h1.text-center Good Morning. Have a great day
+      else if hour < 11
+        h1.text-center Good Morning.
+      else if hour <= 12
+        h1.text-center Go get Lunch
+      else if hour < 17
+        h1.text-center Good Afternoon
+      else if hour <= 22
+        h1.text-center Good Evening
+      else if hour <= 23
+        h1.text-center Good Night
+      else if hour < 24
+        h1.text-center 😴 It's late, Go to Bed! 😴
       hr
-      .row
-        .col
-          if hour < 7
-            h1.text-center 🔥 Good Morning, early riser! 🔥 
-          else if hour < 10
-            h1.text-center Good Morning. Have a great day
-          else if hour < 11
-            h1.text-center Good Morning.
-          else if hour <= 12
-            h1.text-center Go get Lunch
-          else if hour < 17
-            h1.text-center Good Afternoon
-          else if hour <= 22
-            h1.text-center Good Evening
-          else if hour <= 23
-            h1.text-center Good Night
-          else if hour < 24
-            h1.text-center 😴 It's late, Go to Bed! 😴
-          hr
 
 
-      .row
-        .col
-          h3 #{day}'s Agenda
-            case day
-              when "Saturday"
-                small.text-muted  It's the weekend!
-              when "Sunday"
-                small.text-muted  One more day. Relax it up
-              when "Monday"   
-                small.text-muted  Ugh                
-              default
-                small.text-muted  work work work work work
+  .row
+    .col
+      h3 #{day}'s Agenda
+        case day
+          when "Saturday"
+            small.text-muted  It's the weekend!
+          when "Sunday"
+            small.text-muted  One more day. Relax it up
+          when "Monday"   
+            small.text-muted  Ugh                
+          default
+            small.text-muted  work work work work work
 
-            .row
-              .col
-                p Harper
-                table.table.table-striped.table-sm
-                  tbody
-                    tr
-                      th(scope='row') 9:30am
-                      td Doctor's appointment
-                    tr
-                      th(scope='row') 10:30am
-                      td Harper <> Dylan                     
-                    tr
-                      th(scope='row') 11:00am
-                      td Call Hiromi <> Harper    
-                    tr
-                      th(scope='row') 6:00pm
-                      td Work it out 
-                    tr
-                      th(scope='row') 8:00pm
-                      td Dinner at Mirai 
-                    tr
-                      th(scope='row') 11:00pm
-                      td Drinks at handlbar 
-                    tr
-                      th(scope='row') 12:00am
-                      td bed                                                                                                           
-              .col
-                p Hiromi 
-                table.table.table-striped.table-sm
-                  tbody
-                  
-                    tr
-                      th(scope='row') 6:00pm
-                      td Work it out                 
-                    tr
-                      th(scope='row') 8:00pm
-                      td Dinner at Mirai 
-                    tr
-                      th(scope='row') 11:00pm
-                      td Drinks at handlbar 
-                    tr
-                      th(scope='row') 12:00am
-                      td bed 
-
-          
-        if !presence.everyone_home  
+        .row
           .col
-            h3 Where is everyone?
-            .row
-              each people in presence.people
-                .col
-                  figure.figure
-                    img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
-                    figcaption.figure-caption.text-center
-                      - name = people.full_name.split(" ")[0]
-                      if people.location.inTransit > 0 
-                        - speed = Math.round(people.location.speed)
-                        p #{name} is in transit (#{speed} mph)
-                      else
-                        if people.location.name != undefined
-                          p #{name} is at #{people.location.name}
-                        else
-                          p #{name} is at #{people.location.address1}, #{people.location.address2}
-        else
+            p Harper
+            table.table.table-striped.table-sm
+              tbody
+                tr
+                  th(scope='row') 9:30am
+                  td Doctor's appointment
+                tr
+                  th(scope='row') 10:30am
+                  td Harper <> Dylan                     
+                tr
+                  th(scope='row') 11:00am
+                  td Call Hiromi <> Harper    
+                tr
+                  th(scope='row') 6:00pm
+                  td Work it out 
+                tr
+                  th(scope='row') 8:00pm
+                  td Dinner at Mirai 
+                tr
+                  th(scope='row') 11:00pm
+                  td Drinks at handlbar 
+                tr
+                  th(scope='row') 12:00am
+                  td bed                                                                                                           
           .col
-            
-            .row
-              .col
-                h1.display-1.text-center Everyone is home!
-                h1.text-center <i class="fa fa-heart" aria-hidden="true"></i> <i class="fa fa-heart-o" aria-hidden="true"></i> <i class="fa fa-heart" aria-hidden="true"></i>
-                    
+            p Hiromi 
+            table.table.table-striped.table-sm
+              tbody
+              
+                tr
+                  th(scope='row') 6:00pm
+                  td Work it out                 
+                tr
+                  th(scope='row') 8:00pm
+                  td Dinner at Mirai 
+                tr
+                  th(scope='row') 11:00pm
+                  td Drinks at handlbar 
+                tr
+                  th(scope='row') 12:00am
+                  td bed 
 
+      
+    if !presence.everyone_home  
+      .col
+        h3 Where is everyone?
+        .row
+          each people in presence.people
+            .col
+              figure.figure
+                img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
+                figcaption.figure-caption.text-center
+                  - name = people.full_name.split(" ")[0]
+                  if people.location.inTransit > 0 
+                    - speed = Math.round(people.location.speed)
+                    p #{name} is in transit (#{speed} mph)
+                  else
+                    if people.location.name != undefined
+                      p #{name} is at #{people.location.name}
+                    else
+                      p #{name} is at #{people.location.address1}, #{people.location.address2}
+    else
+      .col
         
+        .row
+          .col
+            h1.display-1.text-center Everyone is home!
+            h1.text-center <i class="fa fa-heart" aria-hidden="true"></i> <i class="fa fa-heart-o" aria-hidden="true"></i> <i class="fa fa-heart" aria-hidden="true"></i>
+                
 
-      .row
-        .col.text-center#quotation
-          | #{quotation.quotation} 
-          br
-          | &mdash; #{quotation.author}      
+    
 
-    |  1200 by 825px
+  .row
+    .col.text-center#quotation
+      | #{quotation.quotation} 
+      br
+      | &mdash; #{quotation.author}      
+
+

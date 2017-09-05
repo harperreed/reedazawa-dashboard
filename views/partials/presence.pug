@@ -1,27 +1,17 @@
 mixin presenceblock(presence)
-  if !presence.everyone_home  
+  
+  h3#people_away_title Where is everyone?
+  .row#people_away
     
-      h3 Where is everyone?
-      .row
-        each people in presence.people
-          .col
-            figure.figure
-              img.figure-img.img-fluid.rounded(src=people.location.map_url, alt=people.full_name)
-              figcaption.figure-caption.text-center
-                - name = people.full_name.split(" ")[0]
-                if people.location.inTransit > 0 
-                  - speed = Math.round(people.location.speed)
-                  p #{name} is in transit (#{speed} mph)
-                else
-                  if people.location.name != undefined
-                    p #{name} is at #{people.location.name}
-                  else
-                    p #{name} is at #{people.location.address1}, #{people.location.address2}
-  else
- 
-      
-      .row
-        .col
-          h1.display-1.text-center Everyone is home!
-          h1.text-center <i class="fa fa-heart" aria-hidden="true"></i> <i class="fa fa-heart-o" aria-hidden="true"></i> <i class="fa fa-heart" aria-hidden="true"></i>
-              
+
+
+
+  .row#everyone_home
+    .col
+      h1.display-1.text-center Everyone is home!
+      h1.text-center 
+        i.fa.fa-heart(aria-hidden='true')
+        i.fa.fa-heart-o(aria-hidden='true')
+        i.fa.fa-heart(aria-hidden='true')
+
+          

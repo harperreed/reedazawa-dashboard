@@ -54,6 +54,9 @@ body{
 }
 
 .figure-caption {
-
     color: #222222;
+}
+
+#everyone_home{
+  display:none;
 }

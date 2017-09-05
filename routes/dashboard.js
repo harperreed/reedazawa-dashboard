@@ -47,7 +47,7 @@ function getweather() {
 function getLogs() {
     return new Promise(function(resolve,reject) {
         var ref = admin.database().ref("logger")
-        ref.orderByChild('timestamp').limitToLast(5).once("value", function(snapshot) {
+        ref.orderByChild('timestamp').limitToLast(1).once("value", function(snapshot) {
             resolve(snapshot.val());
         });
     });
@@ -55,110 +55,57 @@ function getLogs() {
 
 function getPresence() {
     return new Promise(function(resolve,reject) {
+
         request.post({
             headers: {'content-type' : 'application/x-www-form-urlencoded'},
             url:     config.presence.url,
             body:    "api_key=" + config.presence.apikey
         }, function(error, response, body){
+            
             presence = JSON.parse(body)
+
             resolve(presence)
         });
+
     });
 }
 
 
 /* GET home page. */
-router.get('/logs', function(req, res, next) {
-    getLogs().then(function(data) {
-        return data
-    }).then(function(data){
-        res.send(data)
-    })
-    .catch(next)
-});
-
-/* GET home page. */
-router.get('/presence', function(req, res, next) {
-    p = []
-    getPresence().then(function(data) {
-        //res.send(data)
-        return data
-    }).then(function(presence){
-        console.log(presence)
-        variables = {
-            presence: presence,
-        }
-        res.render('presence', variables);
-
-    })
-    .catch(next)
-});
-
-/* GET home page. */
-router.get('/weather', function(req, res, next) {
-    getweather().then(function(data) {
-        return data.current_observation
-    }).then(function(data){
-        res.send(data)
-    })
-    .catch(next)
-});
-
-
-/* GET home page. */
-router.get('/quotation', function(req, res, next) {
-    quotation = quotations[Math.floor(Math.random()*quotations.length)]
-    res.send(quotation)
-});
-
-/* GET home page. */
-router.get('/greeting', function(req, res, next) {
-    variables = {
-            hour: moment().tz(config.timezone).format('k')
-        }
-    res.render('greeting', variables);
-});
-
-/* GET home page. */
 router.get('/', function(req, res, next) {
-
-    var time = moment().tz(config.timezone).format('LT')
-        
-    weather = null
-    presence = null
-    logs = null
-
-    getweather().then(function(data) {
-        weather = data.current_observation
-         
-        presence =getPresence()
-        return getPresence()
-    }).then(function(data){
-        presence = data
-        return presence
-    }).then(function(data){
-        quotation = quotations[Math.floor(Math.random()*quotations.length)]
-        variables = {
-            title: config.title, 
-            temp: weather.temp_f, 
-            weather: weather.weather, 
-            weathericon: weather.icon_url,
-            presence: presence,
-            logs:logs,
-            time:time,
-            day: moment().tz(config.timezone).format('dddd'),
-            hour: moment().tz(config.timezone).format('k'),
-            quotation:quotation
-        }
-        console.log(variables);
-
-        res.render('sockettest', variables);
-    })
-    .catch(next)
-
-    
-    //res.render('dashboard', { title: 'Express', temp: weather.temp_f});
-   
+    variables = {
+            title: config.title,
+    }
+    res.render('dashboard-async', variables);
 });
+
+
+router.get('/update', function(req, res, next) {
+    /* Handle weather */
+    var weather_key = "weather"+ config.weatherunderground.query
+    var weather = cache.get(weather_key)
+    res.io.emit("weather", weather.current_observation );
+
+    /* Handle quotation */
+    var quotation = quotations[Math.floor(Math.random()*quotations.length)]
+    res.io.emit("quotation", quotation );
+
+    getPresence().then(function(presence) {
+        res.io.emit("presence", presence );
+    })
+
+    res.send('update');
+});
+
+/* timers */
+
+var weather_update_time = 30*60*1000;
+console.log(weather_update_time)
+var weather_timer = setInterval(function() {
+        getweather()
+}, weather_update_time);
+
+getweather()
+
 
 module.exports = router;

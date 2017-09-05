@@ -2,12 +2,4 @@ mixin header(day)
   h1.display-1
     i.fa.fa-home(aria-hidden='true')
     | Reedazawa
-    case day
-        when "Saturday"
-          small.text-muted  <i class="fa fa-diamond" aria-hidden="true"></i>
-        when "Friday"
-          small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
-        when "Sunday"
-          small.text-muted  <i class="fa fa-rocket" aria-hidden="true"></i>
-        when "Monday"
-          small.text-muted  <i class="fa fa-hand-rock-o" aria-hidden="true"></i>
+    small.text-muted#header-icon

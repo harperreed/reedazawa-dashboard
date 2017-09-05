@@ -22,65 +22,96 @@
         $("#battery").html(battery_html)
     }
 
-var getQuotation = function () {
-    $.getJSON( "/dashboard/quotation", function( data ) {
-        console.log(data)
-        $('#quotation #quote').text(data.quotation);
-        $('#quotation #author').text(data.author);
-    });
+var updateHeader = function () {
+  today = new Date();
+  weekday = today.getDay();
+  switch(weekday) {
+    case 1:
+        icon = "hand-rock-o"
+        break;
+    case 2:
+        icon = ""
+        break;
+    case 3:
+        icon = ""
+        break;
+    case 4:
+        icon = ""
+        break;
+    case 5:
+        icon = "rocket"
+        break;
+    case 6:
+        icon = "diamond"
+        break;
+    case 7:
+        icon = ""
+        break;                
+
+    default:
+        icon = ""
+        break;    
+    }
+  if (icon !=""){
+    $("#header-icon").html('<i class="fa fa-'+icon+'" aria-hidden="true"></i>')  
+  }
 }
 
-var changeGreeting = function () {
-    $.get( "/dashboard/greeting", function( data ) {
-        if ($('#greeting').html()==data){
-          console.log("greeting stays the same")
-        }else{
-          console.log("update greeting")
-          $('#greeting').html(data);
-        }
-        
-    });
+var updateGreeting = function () {
+  today = new Date();
+  hour = today.getHours();
+  console.log(hour)
+  if (hour < 7){
+    greeting = "🔥 Good Morning, early riser! 🔥";
+  }
+  else if (hour < 10){
+    greeting = "Good Morning. Have a great day";
+  }
+  else if (hour < 11){
+    greeting = "Good Morning.";
+  }
+  else if (hour <= 12){
+    greeting = "Go get Lunch";
+  }
+  else if (hour < 17){
+    greeting = "Good Afternoon";
+  }
+  else if (hour <= 22){
+    greeting = "Good Evening";
+  }
+  else if (hour <= 23){
+    greeting = "Good Night";
+  }
+  else if (hour < 24){
+    greeting = "😴 It's late, Go to Bed! 😴";
+  }
+  if ($("#greeting").html()!=greeting){
+    $("#greeting").html(greeting);  
+  }
+  
 }
 
-var getPresence = function () {
-    $.get( "/dashboard/presence", function( data ) {
-        if ($('#presence').html()==data){
-          console.log("presence stays the same")
-        }else{
-          console.log("presence greeting")
-          $('#presence').html(data);
-        }
-        
-    });
+var triggerUpdates = function(){
+  $.get( "/dashboard/update", function( data ) {
+    console.log(data)
+  });
 }
 
-var getWeather = function () {
-    $.getJSON( "/dashboard/weather", function( data ) {
-        if ($('#weather #temperature').text()==data.temp_f){
-          console.log("don't change temp")
-        }else{
-          console.log("change temp")
-          $('#weather #temperature').text(data.temp_f);
-        }
-        if ($('#weather #icon').text()==data.icon_url){
-          console.log("don't change icon")
-        }else{
-          console.log("change icon")
-          $('#weather #icon').text(data.icon_url);
-        }
-        $('#weather #icon').text(data.icon_url);
-    });
+var runUpdate = function () {
+  getDeviceTelemetry();
+  updateHeader();
+  updateGreeting();
+  triggerUpdates();
 }
-
 
 $(document).ready(function() {
-    getDeviceTelemetry();
-    var update_time = 600000;
+
+
+    var update_time = 600000; //every ten minutes. i think
+    //var update_time = 10000;
     var timer = setInterval(function() {
-        getDeviceTelemetry();
-        getQuotation();
-        getWeather();
-        getPresence();
-        changeGreeting();
+        runUpdate()
     }, update_time);
+
+    runUpdate();
 });

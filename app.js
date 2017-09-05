@@ -4,8 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var admin = require("firebase-admin");
 var index = require('./routes/index');
+var moment = require('moment-timezone');
 
 var dashboard = require('./routes/dashboard');
 var yaml_config = require('node-yaml-config');
@@ -55,5 +56,22 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// firebase
+
+var serviceAccount = require(__dirname +"/config/" + config.firebase.serviceaccount_json);
+console.log(config.firebase.domain)
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://"+config.firebase.domain+".firebaseio.com"
+});
+
+var ref = admin.database().ref("logger")
+ref.orderByChild('timestamp').limitToLast(1).on("value", function(snapshot) {
+    console.log(snapshot.val())
+    io.emit("log", snapshot.val())
+});
+
 
 module.exports = {app: app, server: server};

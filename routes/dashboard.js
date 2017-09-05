@@ -8,7 +8,6 @@ var request = require('request');
 
 var config = yaml_config.load(__dirname + '/../config/config.yaml');
 
-
 const cache = require('node-file-cache').create({"life":1800});
 
 var wunderground = new Wunderground(config.weatherunderground.apikey);
@@ -17,11 +16,6 @@ var serviceAccount = require(__dirname +"/../config/" + config.firebase.servicea
 
 var quotations = require(__dirname +"/../config/quotations.json");
 
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://"+config.firebase.domain+".firebaseio.com"
-});
 
 function getweather() {
     return new Promise(function(resolve,reject) {
@@ -82,9 +76,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/update', function(req, res, next) {
     /* Handle weather */
-    var weather_key = "weather"+ config.weatherunderground.query
-    var weather = cache.get(weather_key)
-    res.io.emit("weather", weather.current_observation );
+
 
     /* Handle quotation */
     var quotation = quotations[Math.floor(Math.random()*quotations.length)]
@@ -93,6 +85,16 @@ router.get('/update', function(req, res, next) {
     getPresence().then(function(presence) {
         res.io.emit("presence", presence );
     })
+
+    /* Handle weather */
+    getweather().then(function(weather) {
+        res.io.emit("weather", weather.current_observation );
+    })
+
+    var ref = admin.database().ref("logger")
+    ref.orderByChild('timestamp').limitToLast(1).once("value", function(snapshot) {
+      res.io.emit("log", snapshot.val())
+    });
 
     res.send('update');
 });
@@ -106,6 +108,9 @@ var weather_timer = setInterval(function() {
 }, weather_update_time);
 
 getweather()
+
+
+
 
 
 module.exports = router;

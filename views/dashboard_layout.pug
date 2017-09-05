@@ -21,7 +21,10 @@ html
 
         div 
           p let's make some widgets!
-      #battery
+      #statusbar
+        span#battery
+        | &nbsp;&mdash;&nbsp;
+        span#log this display brought to you by laborday 2017 
         
     script(src="/socket.io/socket.io.js")
     script(src="/js/sockethandler.js")

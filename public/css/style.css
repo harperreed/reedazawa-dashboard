@@ -27,7 +27,7 @@ body{
   margin-bottom:25px;
 }
 
-#battery{
+#statusbar{
     position: fixed;
     width: 100%;
     bottom: 0;

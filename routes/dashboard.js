@@ -101,9 +101,9 @@ function grabCalendar(person){
           refresh_token: person.refresh_token
       });
       getEvents(oauth2Client, function(e){
-        formatEvents(e, function(events){
-          cache.set(key, events);
-          resolve(events);
+        formatEvents(e, function(fe){
+          cache.set(key, fe);
+          resolve(fe);
         });
       });
     }else{

@@ -69,7 +69,7 @@ admin.initializeApp({
 
 var ref = admin.database().ref("logger")
 ref.orderByChild('timestamp').limitToLast(1).on("value", function(snapshot) {
-    console.log(snapshot.val())
+
     io.emit("log", snapshot.val())
 });
 

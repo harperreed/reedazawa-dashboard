@@ -60,3 +60,18 @@ body{
 #everyone_home{
   display:none;
 }
+
+.event{
+  word-wrap: break-word;
+}
+
+.date{
+  font-family: bold;
+  font-size: 14px;
+  border: 1px solid black;
+}
+
+h5{
+  padding: 0px; 
+  margin: 0px;
+}

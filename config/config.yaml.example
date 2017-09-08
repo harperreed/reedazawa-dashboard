@@ -13,3 +13,15 @@ default:
   presence:
     url: https://presence-server.com
     apikey: xxxx
+
+
+
+calendar:
+  consumer_key: xxxxx
+  consumer_secret: xxxxx
+  callback: http://localhost/auth/callback
+  people:
+    - bob:
+      access_token: xxx
+      refresh_token: xxx
+ 

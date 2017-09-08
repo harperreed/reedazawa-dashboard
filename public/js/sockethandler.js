@@ -82,3 +82,43 @@ socket.on('log', function (logentry) {
   }
 });
 
+parseEventObject = function(data){
+
+  html = []
+  for (day in data){
+    console.log(day)
+    html.push('<tr><th class="text-center" scope="row" colspan="2" class="date"><h5>'+day+'</h5></th></tr>')
+    for (e in data[day]){
+      event = data[day][e]
+      console.log(event)
+      var start = moment(event.start.dateTime || event.start.date)
+      var time = start.format("LT")
+      if (time == "12:00 AM"){
+        time = "All day"
+      }
+      time = time.replace(" ", "&nbsp;")
+      //if(event.summary.length > 50) event.summary = event.summary.substring(0,10);
+      html.push('<tr><th scope="row">'+time+'</th><td class="event">'+event.summary+'</td></tr>')
+      
+    }
+    
+  }
+  html = $(html.join("\n"));
+  return html
+}
+
+
+socket.on('events-harper', function (data) {
+  console.log("Harper Events")
+  console.log(data)
+  html = parseEventObject(data);
+  $("#harper-calendar").html(html)
+});
+
+socket.on('events-hiromi', function (data) {
+  console.log("Hiromi Events")
+  console.log(data)
+  html = parseEventObject(data);
+  $("#hiromi-calendar").html(html)
+});
+

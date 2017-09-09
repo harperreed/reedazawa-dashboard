@@ -23,7 +23,7 @@ socket.on('quotation', function (data) {
 });
 
 socket.on('presence', function (presence) {
-  console.log(presence)
+
 
   if (presence.everyone_home){
     $("#everyone_home").show();
@@ -85,12 +85,13 @@ socket.on('log', function (logentry) {
 parseEventObject = function(data){
 
   html = []
+  console.log(data)
   for (day in data){
-    console.log(day)
+
     html.push('<tr><th class="text-center" scope="row" colspan="2" class="date"><h5>'+day+'</h5></th></tr>')
     for (e in data[day]){
       event = data[day][e]
-      console.log(event)
+
       var start = moment(event.start.dateTime || event.start.date)
       var time = start.format("LT")
       if (time == "12:00 AM"){
@@ -110,14 +111,14 @@ parseEventObject = function(data){
 
 socket.on('events-harper', function (data) {
   console.log("Harper Events")
-  console.log(data)
+
   html = parseEventObject(data);
   $("#harper-calendar").html(html)
 });
 
 socket.on('events-hiromi', function (data) {
   console.log("Hiromi Events")
-  console.log(data)
+
   html = parseEventObject(data);
   $("#hiromi-calendar").html(html)
 });

@@ -38,8 +38,7 @@ const oauth2Client = new OAuth2(
 function getEvents(auth){
   return new Promise(function(resolve,reject) {
     const calendar = google.calendar('v3');
-    console.log("in request")
-    console.log(auth)
+
     params = {
       auth: auth,
       calendarId: 'primary',
@@ -116,7 +115,7 @@ function grabCalendar(person){
 
 
         formatEvents(e, function(fe){
-          //cache.set(key, fe);
+          cache.set(key, fe);
           resolve(fe);
         });
 
@@ -206,20 +205,16 @@ router.get('/update', function(req, res, next) {
     ref.orderByChild('timestamp').limitToLast(1).once("value", function(snapshot) {
       res.io.emit("log", snapshot.val())
     });
-    
-
-
+  
 
     grabCalendar("hiromi").then(function(events) {
         key = "events-hiromi"
-        console.log(key)
         res.io.emit(key, events );
         key = ""
     }).then(function() {
 
       grabCalendar("harper").then(function(o) {
         key = "events-harper"
-        console.log(key)
         res.io.emit(key, o );
         key = ""
       })    

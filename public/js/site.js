@@ -71,7 +71,7 @@ var updateGreeting = function () {
     greeting = "Good Morning.";
   }
   else if (hour <= 12){
-    greeting = "Go get Lunch";
+    greeting = '<i class="fa fa-cutlery" aria-hidden="true"></i> Go get Lunch <i class="fa fa-cutlery" aria-hidden="true"></i>';
   }
   else if (hour < 17){
     greeting = "Good Afternoon";

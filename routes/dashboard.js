@@ -6,8 +6,8 @@ var moment = require('moment-timezone');
 var admin = require("firebase-admin");
 var request = require('request');
 
-var google = require('googleapis');
-var OAuth2 = google.auth.OAuth2;
+const google = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
 
 
 
@@ -24,7 +24,7 @@ var serviceAccount = require(__dirname +"/../config/" + config.firebase.servicea
 var quotations = require(__dirname +"/../config/quotations.json");
 
 
-var oauth2Client = new OAuth2(
+const oauth2Client = new OAuth2(
   config.calendar.consumer_key,
   config.calendar.consumer_secret,
   config.calendar.callback
@@ -35,47 +35,55 @@ var oauth2Client = new OAuth2(
 
 
 
-function getEvents(auth, callback){
-    var calendar = google.calendar('v3');
-  calendar.events.list({
-    auth: oauth2Client,
-    calendarId: 'primary',
-    timeMin: (new Date()).toISOString(),
-    maxResults: 5,
-    singleEvents: true,
-    orderBy: 'startTime'
-  }, function(err, response) {
-    if (err) {
-      console.log('The API returned an error: ' + err);
-      return;
+function getEvents(auth){
+  return new Promise(function(resolve,reject) {
+    const calendar = google.calendar('v3');
+    console.log("in request")
+    console.log(auth)
+    params = {
+      auth: auth,
+      calendarId: 'primary',
+      timeMin: (new Date()).toISOString(),
+      maxResults: 5,
+      singleEvents: true,
+      orderBy: 'startTime'
     }
-    var events = response.items;
-    var events_obj = []
 
-    if (events.length == 0) {
-      console.log('No upcoming events found.');
-    } else {
-      
-      for (var i = 0; i < events.length; i++) {
-        var event = events[i];
-        
+    calendar.events.list(params, function(err, response) {
 
-        delete event.kind
-        delete event.etag
-        delete event.id
-        delete event.iCalUID
-        delete event.recurringEventId
-        events_obj.push(event)
+      if (err) {
+        console.log('The API returned an error: ' + err);
+        return;
       }
-      callback(events_obj)
-    }
+      var events = response.items;
+      var events_obj = []
+
+
+      if (events.length == 0) {
+        console.log('No upcoming events found.');
+      } else {
+        
+        for (var i = 0; i < events.length; i++) {
+          var event = events[i];
+          
+
+          delete event.kind
+          delete event.etag
+          delete event.id
+          delete event.iCalUID
+          delete event.recurringEventId
+          events_obj.push(event)
+        }
+        resolve(events_obj);
+      }
+    });
   });
 }
 
-function formatEvents(events, callback){
+function formatEvents(events_object, callback){
   events_obj = {}
-   for (var i = 0; i < events.length; i++) {
-    var event = events[i];
+  for (var i = 0; i < events_object.length; i++) {
+    var event = events_object[i];
     var start = moment(event.start.dateTime || event.start.date)
     break_form = "dddd [the] Do"
     key = start.format(break_form)
@@ -83,30 +91,38 @@ function formatEvents(events, callback){
       events_obj[key] = []
     }
     events_obj[key].push(event)
-   }
-   callback(events_obj)
+  }
+  callback(events_obj)
 
 }
 
 function grabCalendar(person){
   return new Promise(function(resolve,reject) {
     var key = "events - " + person
-    console.log(key)
     var events = cache.get(key)
     if (events == null){
       console.log(person + " events not cache hit")
-      person = config.calendar.people[person]
-      oauth2Client.setCredentials({
-          access_token: person.access_token,
-          refresh_token: person.refresh_token
+      person_oauth_tokens = config.calendar.people[person]
+
+      var auth = new Object()
+      auth = oauth2Client
+
+      auth.setCredentials({
+          access_token: person_oauth_tokens.access_token,
+          refresh_token: person_oauth_tokens.refresh_token
       });
-      getEvents(oauth2Client, function(e){
+
+      getEvents(auth).then(function(e) {
+
+
         formatEvents(e, function(fe){
-          cache.set(key, fe);
+          //cache.set(key, fe);
           resolve(fe);
         });
+
       });
     }else{
+      console.log('%s - %s', key, events);
       console.log(person + " events cache hit")
       resolve(events);
     }
@@ -191,12 +207,7 @@ router.get('/update', function(req, res, next) {
       res.io.emit("log", snapshot.val())
     });
     
-    grabCalendar("harper").then(function(events) {
-        key = "events-harper"
-        console.log(key)
-        res.io.emit(key, events );
-        key = ""
-    })
+
 
 
     grabCalendar("hiromi").then(function(events) {
@@ -204,7 +215,15 @@ router.get('/update', function(req, res, next) {
         console.log(key)
         res.io.emit(key, events );
         key = ""
-    })
+    }).then(function() {
+
+      grabCalendar("harper").then(function(o) {
+        key = "events-harper"
+        console.log(key)
+        res.io.emit(key, o );
+        key = ""
+      })    
+    });
 
 
     

@@ -1,0 +1,30 @@
+<h3>Tesla </h3>
+
+<div>
+
+
+<h2>
+<i data-showif='battery_full' class="fa fa-battery-full" aria-hidden="true"></i>
+<i data-showif='battery_threequarters' class="fa fa-battery-three-quarters" aria-hidden="true"></i>
+<i  data-showif='battery_half' class="fa fa-battery-half" aria-hidden="true"></i>
+<i data-showif='battery_quarter' class="fa fa-battery-quarter" aria-hidden="true"></i>
+<i data-showif='battery_empty' class="fa fa-battery-empty" aria-hidden="true"></i>
+<i data-showif='charging_charging' class="fa fa-bolt" aria-hidden="true"></i>
+<span data-bind="battery_level"></span>%
+</h2>
+<h3>
+
+<span data-bind="battery_range"></span> miles range
+
+</h3>
+</div>
+
+
+
+<div  daata-bind="charging_state">
+  <span data-showif='charging_complete'>Completed charging</span>
+  <span data-showif='charging_not_charging'>Not connected to charger</span>
+  <span data-showif='charging_charging'>Charging</span>
+</div>
+
+<div class="updated-at" data-bind="updatedAtMessage"></div>

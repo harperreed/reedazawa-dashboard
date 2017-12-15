@@ -1,0 +1,14 @@
+version: "3"
+services:
+  smashing:
+    image: visibilityspots/smashing:latest
+    restart: always
+    ports:
+      - 3030:3030
+    volumes: 
+      - ./dashboards:/dashboards
+      - ./jobs:/jobs
+      - ./assets:/assets
+      - ./widgets:/widgets
+      - ./config:/config
+      - ./public:/public

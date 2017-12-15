@@ -1,0 +1,36 @@
+
+
+<div data-hideif='everyone_home'>
+  <div data-showif='occupied'>
+    <ul class="list-nostyle">
+      <li data-foreach-person="people" data-hideif='person.present'>
+        
+        <div class="col">
+          <figure class="figure">
+            <img data-bind-src="person.location.map_url"/>
+            <figcaption class="figure-caption text-center"><p data-bind="person.caption"></p></figcaption>
+          </figure>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div data-hideif='occupied'>
+    <h2>Welcome back</h2>
+    <h2 class="text-center">
+    <i class="fa fa-home" aria-hidden="true"></i>
+
+  </h2>
+  </div>
+</div>
+
+
+<div data-showif='everyone_home'>
+  <h2 class="display-1 text-center">Everyone is home!</h2>
+  <h2 class="text-center">
+    <i class="fa fa-heart" aria-hidden="true"></i>
+    <i class="fa fa-heart-o" aria-hidden="true"></i>
+    <i class="fa fa-heart" aria-hidden="true"></i>
+  </h2>
+</div>
+
+<div class="updated-at" data-bind="updatedAtMessage"></div>

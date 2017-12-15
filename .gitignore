@@ -1,4 +1,1 @@
-*DS_STORE
-history.yml
-node_modules
-store.json
+docker-compose.yml

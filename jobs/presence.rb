@@ -13,26 +13,28 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
 
   presence = JSON.parse(response.body)  
 
-  #
+
   occupied = presence["occupied"]
   everyone_home = presence["everyone_home"]
   people = []
 
   presence["people"].each do |person|
-    person["caption"] = "fuck yea"
-    person['name'] = person["full_name"].split[0]
+    if (person['guest'] != true)
+      person["caption"] = "fuck yea"
+      person['name'] = person["full_name"].split[0]
 
-    if (person['location']['inTransit']==nil)
-      person["caption"] = person["name"] + ' is in transit'
-    elsif (person['location']['name'] != nil)
-      person["caption"] = person["name"] + ' is at ' + person["location"]["name"]
-    else
-      person["caption"] = person["name"]  + ' is at ' + person["location"]["address1"] + ', ' + person["location"]["address2"]
+      if (person['location']['inTransit']==nil)
+        person["caption"] = person["name"] + ' is in transit'
+      elsif (person['location']['name'] != nil)
+        person["caption"] = person["name"] + ' is at ' + person["location"]["name"]
+      else
+        person["caption"] = person["name"]  + ' is at ' + person["location"]["address1"] + ', ' + person["location"]["address2"]
+      end
+
+      person["location"]["map_url"] = person["location"]["map_url"].gsub("400x300","650x400")
+
+      people.push(person)
     end
-
-    person["location"]["map_url"] = person["location"]["map_url"].gsub("400x300","650x400")
-
-    people.push(person)
   end
 
 

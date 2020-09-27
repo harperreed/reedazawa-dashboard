@@ -25,6 +25,7 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
   hiromi_response = hassconnect(hiromi_presence_state)
   harper_response = hassconnect(harper_presence_state)
 
+<<<<<<< HEAD
   
 
   hiromi_lat = hiromi_response['attributes']['latitude'].to_s
@@ -47,6 +48,30 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     harper_home =true
   else
     harper_home = false
+=======
+
+  occupied = presence["occupied"]
+  everyone_home = presence["everyone_home"]
+  people = []
+
+  presence["people"].each do |person|
+    if (person['guest'] != true)
+      person["caption"] = "fuck yea"
+      person['name'] = person["full_name"].split[0]
+
+      if (person['location']['inTransit']==nil)
+        person["caption"] = person["name"] + ' is in transit'
+      elsif (person['location']['name'] != nil)
+        person["caption"] = person["name"] + ' is at ' + person["location"]["name"]
+      else
+        person["caption"] = person["name"]  + ' is at ' + person["location"]["address1"] + ', ' + person["location"]["address2"]
+      end
+
+      person["location"]["map_url"] = person["location"]["map_url"].gsub("400x300","650x400")
+
+      people.push(person)
+    end
+>>>>>>> a9aada68b48f45e46a3a0a07ed54a4ce2275672c
   end
 
   if harper_home && hiromi_home
@@ -72,5 +97,9 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
 
   people = [hiromi, harper]
 
+<<<<<<< HEAD
   send_event('presence', { occupied: occupied, everyone_home: everyone_home , people: people})
+=======
+  send_event('presence', { occupied: occupied, everyone_home: everyone_home, people: people})
+>>>>>>> a9aada68b48f45e46a3a0a07ed54a4ce2275672c
 end

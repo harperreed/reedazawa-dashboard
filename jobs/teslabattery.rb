@@ -3,33 +3,43 @@ require 'json'
 require "uri"
 
 
-api_key = ENV["REEDAZAWA_API_TOKEN"] 
+def hassconnect(state)
+  api_url = ENV["API_ROOT"] + state
+
+  uri = URI.parse(api_url)
+  http = Net::HTTP.new(uri.host, uri.port)
+
+  request = Net::HTTP::Get.new(uri.request_uri)
+  request["Authorization"] = "Bearer "+ ENV["HASS_TOKEN"]
+  request["User-Agent"] = "job"
+  request["Accept"] = "*/*"
+  request["accept-encoding"] = "none"
+  response = http.request(request)
+  return JSON.parse(response.body)
+end
   
 SCHEDULER.every '1m', :first_in => 0 do |job|
-  api_url = ENV["API_ROOT"] + "tesla"
-  uri = URI.parse(api_url)
-  post_data = {"api_key" => api_key}
-  response = Net::HTTP.post_form(uri, post_data)
+  state = "sensor.ii_usagi_battery_sensor"
 
-  tesla = JSON.parse(response.body)  
-
+  battery_sensor = hassconnect(state)
+  battery_level  = Integer(battery_sensor["state"])
   
-  battery = tesla["charge_state"]
-  battery_level = Integer(battery["battery_level"])
-  battery_range = battery["battery_range"]
-  charging_state = battery["charging_state"]
+  state = "binary_sensor.ii_usagi_charger_sensor"
+  charger_sensor = hassconnect(state)
+  charging_state  = charger_sensor["state"]
+
+  state = "sensor.ii_usagi_range_sensor"
+  range_sensor = hassconnect(state)
+  range_state  = range_sensor["state"]
   
   charging_complete = false
   charging_charging = false
   charging_not_charging = false
 
 
-
-  if (charging_state=="Complete")
-    charging_complete = true
-  elsif (charging_state=="Disconnected")
+  if (charging_state=="off")
     charging_not_charging = true
-  elsif (charging_state=="Charging")
+  elsif (charging_state=="on")
     charging_charging = true
   end
 
@@ -52,14 +62,10 @@ SCHEDULER.every '1m', :first_in => 0 do |job|
     battery_empty = true
   end
 
-    
-
-
-
 
   variables = { 
     battery_level: battery_level, 
-    battery_range: battery_range, 
+    battery_range: range_state, 
     charging_state: charging_state,
 
     battery_full:battery_full,

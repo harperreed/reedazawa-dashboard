@@ -2,7 +2,7 @@ require 'dashing'
 
 configure do
   set :auth_token, ENV["SMASHING_AUTH_TOKEN"]
-
+  set :default_dashboard, 'reedazawa'
 
   helpers do
     def protected!

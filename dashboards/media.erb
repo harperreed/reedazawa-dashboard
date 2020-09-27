@@ -1,0 +1,88 @@
+<script type='text/javascript'>
+$(function() {
+    // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
+    Dashing.widget_base_dimensions = [230, 265]
+    Dashing.numColumns = 5
+});
+</script>
+<% content_for :title do %>Reedazawa<% end %>
+<div class="gridster">
+  <ul>
+
+  
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-view="Clock"></div>
+      <i class="fa fa-clock-o icon-background"></i>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="mediaroom-temp" data-view="Forecast" ></div>
+    </li>
+   
+    <li data-row="1" data-col="1" data-sizex="3" data-sizey="3">
+      <div data-id="mediaroom-art" data-view="Image" data-title="Album Name"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="mediaroom-nowplaying" data-view="Text" data-title="NOW PLAYING" data-text="Artist - Track"></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="mediaroom-progress" data-view="Meter" data-value=0 data-min=0 data-max=100 data-title="Progress" data-moreinfo="2 hours left"></div>
+    </li>
+
+
+
+   
+
+
+   
+
+  </ul>
+
+</div>
+<div id="statusbar"><span id="battery"</span></div>
+<style>
+#statusbar{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 1000;
+    text-align: right;
+}
+</style>
+<script>
+ var getDeviceTelemetry = function () 
+    {
+        if (typeof okular === 'undefined' || okular === null) {
+            var battery = 0;
+        }else {
+            var s = okular.DevicesStatus()[okular.session_uuid]
+            var battery = okular.BatteryLevel
+        }
+        var battery_html = battery +"% "
+
+        if (battery>90){
+            battery_html = battery_html + '<i class="fa fa-battery-full" aria-hidden="true"></i>'
+        }else if (battery>75){
+            battery_html = battery_html + '<i class="fa fa-battery-three-quarters" aria-hidden="true"></i>'
+        }else if (battery>50){
+            battery_html = battery_html +'<i class="fa fa-battery-half" aria-hidden="true"></i>'
+        }else if (battery>25){
+            battery_html = battery_html +'<i class="fa fa-battery-quarter" aria-hidden="true"></i>'
+        }else if (battery>=0){
+            battery_html = battery_html +'<i class="fa fa-battery-empty" aria-hidden="true"></i>'
+        }
+        $("#battery").html(battery_html)
+    }
+
+    $(document).ready(function() {
+
+
+      var update_time = 600000; //every ten minutes. i think
+      //var update_time = 10000;
+      var timer = setInterval(function() {
+          getDeviceTelemetry()
+      }, update_time);
+
+      getDeviceTelemetry();
+  });
+</script>

@@ -1,0 +1,31 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color:  #eee;
+$text-color: #222;
+
+$full-color:  #222;
+$light-color: #444;
+
+
+
+.widget-prosecast {
+
+  background-color: $background-color;
+
+
+
+  .summary{
+    padding: 10px;
+    text-align: center;
+    font-size: 40px;
+    
+  
+  }
+  
+  
+    .updated-at {
+      color: rgba(0, 0, 0, 0.1);
+    }
+  
+}

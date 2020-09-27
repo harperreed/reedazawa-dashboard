@@ -10,7 +10,7 @@ class Dashing.Forecast extends Dashing.Widget
 
   constructor: ->
     super
-    @forecast_icons = new Skycons({"color": "white"})
+    @forecast_icons = new Skycons({"color": "#999999"})
     @forecast_icons.play()
 
   ready: ->
@@ -30,7 +30,9 @@ class Dashing.Forecast extends Dashing.Widget
     @setIcon('later_icon')
 
   setIcon: (name) ->
+    console.log name
     skycon = @toSkycon(name)
+    console.log skycon
     @forecast_icons.set(name, eval(skycon)) if skycon
 
   toSkycon: (data) ->

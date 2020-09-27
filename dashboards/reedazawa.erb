@@ -1,41 +1,91 @@
 <script type='text/javascript'>
 $(function() {
     // These settings override the defaults set in application.coffee. You can do this on a per dashboard basis.
-    Dashing.widget_base_dimensions = [230, 265]
-    Dashing.numColumns = 5
+    Dashing.widget_base_dimensions = [220, 230]
+    Dashing.numColumns = 7 
 });
 </script>
 <% content_for :title do %>Reedazawa<% end %>
+  
 <div class="gridster">
   <ul>
+
+    
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="wunderground" data-view="Wunderground" data-widget_title=""> ></div>
+      <div data-view="Clock"></div>
+      <i class="fa fa-clock-o icon-background"></i>
+    </li>
+     <li data-row="1" data-col="1" data-sizex="3" data-sizey="1">
+      <div data-id="forecast" data-view="ExtendedForecast" ></div>
     </li>
 
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="airnow" data-view="Airnow"></div>
+<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="moon" data-view="Moon"></div>
     </li>
 
+    
 
-    <li data-row="1" data-col="1" data-sizex="3" data-sizey="2">
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
+      <div data-id="slideshow" data-view="Image"></div>
+    </li>
+
+     <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="oblique" data-view="Text"></div>
+    </li>
+
+    
+
+     <li data-row="1" data-col="1" data-sizex="3" data-sizey="2">
+      <div data-id="prosecast" data-view="Prosecast"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="3">
+      <div data-id="media" data-view="Media" data-title="Album Name"></div>
+    </li>
+
+     <li data-row="1" data-col="1" data-sizex="2" data-sizey="2">
       <div data-id="presence" data-view="Presence"></div>
     </li>
 
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="wuforecast" data-view="Wuforecast" ></div>
+    
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="airquality" data-view="Number"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="allergy" data-view="Number"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="uvindex" data-view="Number"></div>
     </li>
    
+
+    
+
+    <li data-row="1" data-col="1" data-sizex="3" data-sizey="1">
+      <div data-id="quote" data-view="Text"></div>
+    </li>
+
+    
+
+
+
     <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
       <div data-id="teslabattery" data-view="Teslabattery"></div>
     </li>
 
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="quote" data-view="Quote"></div>
-    </li>
- <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-view="Clock"></div>
-      <i class="fa fa-clock-o icon-background"></i>
-    </li>
+    
+
+  
+
+  
+
+  
+
+
+
   </ul>
 
 </div>
@@ -50,6 +100,7 @@ $(function() {
 }
 </style>
 <script>
+
  var getDeviceTelemetry = function () 
     {
         if (typeof okular === 'undefined' || okular === null) {

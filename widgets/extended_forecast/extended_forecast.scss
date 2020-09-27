@@ -1,0 +1,37 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color:  #eee;
+$text-color: #222;
+
+$full-color:  #222;
+$light-color: #444;
+
+
+
+.widget-extended-forecast {
+
+  background-color: $background-color;
+  width: 100%;
+
+  text-align: center;
+
+  div{
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+  
+  .forecast{
+    text-align: center;
+  
+  }
+  
+ 
+    
+  
+    
+  }
+  .updated-at {
+    color: rgba(0, 0, 0, 0.1);
+  }
+}

@@ -1,0 +1,30 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color:  #eee;
+
+$title-color:       rgba(0,0,0, 0.7);
+$moreinfo-color:    rgba(0,0,0, 0.7);
+
+// ----------------------------------------------------------------------------
+// Widget-text styles
+// ----------------------------------------------------------------------------
+.widget-moon {
+
+  background-color: $background-color;
+
+  .title {
+    color: $title-color;
+    font-size: 120px;
+  }
+
+  .more-info {
+    color: $moreinfo-color;
+  }
+
+
+
+  &.large h3 {
+    font-size: 165px;
+  }
+}
